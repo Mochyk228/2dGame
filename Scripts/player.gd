@@ -3,14 +3,18 @@ extends CharacterBody2D
 @export var move_speed : float = 50.0
 @export var gravity : float = 100.0
 @export var jump_velocity : float = 60.0
+@export var tile_map : TileMapLayer
 
 @onready var sprite: Sprite2D = $Sprite
 @onready var ray_cast: RayCast2D = $RayCast2D
 
 func _process(delta):
-	if ray_cast.is_colliding():
-		ray_cast.get_collider().queue_free()
-		print("I am colliding!")
+	if Input.is_action_pressed("left_mouse_click"):
+		var pos = get_global_mouse_position()
+		var tile_pos = tile_map.local_to_map(pos)
+		var tile_data = tile_map.get_cell_tile_data(tile_pos)
+		tile_map.set_cell(tile_pos, -1)
+		print("I am colliding! at position: ", pos)
 
 func _physics_process(delta):
 	if not is_on_floor():
@@ -26,6 +30,8 @@ func _physics_process(delta):
 	
 	if velocity.length() > 0.0:
 		if velocity.x > 0:
+			ray_cast.target_position.x = 10.0
 			sprite.flip_h = false
 		else:
+			ray_cast.target_position.x = -10.0
 			sprite.flip_h = true
