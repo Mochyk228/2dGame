@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://ce2rq6lw0xja5"]
+[gd_scene load_steps=21 format=3 uid="uid://ce2rq6lw0xja5"]
 
 [ext_resource type="Script" uid="uid://dgfdiuhiomm44" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://bf0iskit1olf7" path="res://Art/player.png" id="1_v0iea"]
@@ -68,6 +68,15 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_fd4e3"]
+offsets = PackedFloat32Array(0, 0.644195)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qqcod"]
+gradient = SubResource("Gradient_fd4e3")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_cvnsp")
 
@@ -94,12 +103,20 @@ frame = 12
 frame_progress = 1.0
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
 energy = 14.79
 texture = ExtResource("16_fd4e3")
 
 [node name="PointLight2D2" type="PointLight2D" parent="."]
+visible = false
 energy = 11.0
 texture = ExtResource("16_fd4e3")
 texture_scale = 3.49
+
+[node name="PointLight2D3" type="PointLight2D" parent="."]
+visible = false
+energy = 28.13
+texture = SubResource("GradientTexture2D_qqcod")
+texture_scale = 4.36
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
